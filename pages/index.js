@@ -83,8 +83,8 @@ export default function Home() {
       } catch (err) {
         setData(
           "Word not found in the free dictionary api that I'm using." +
-            "\n Either the word is damn weird or there's a connection problem." +
-            "\n This won't cost you."
+            "\n This means that either the word is damn weird or there's a connection problem." +
+            "\n This won't cost you, good luck."
         );
       }
     })();
