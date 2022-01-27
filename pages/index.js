@@ -14,15 +14,7 @@ export default function Home() {
   const [colouredAttempts, setColouredAttempts] = useState([]);
   const [isWon, setIsWon] = useState(false);
   const [triesCounter, setTriesCounter] = useState(0);
-  const [startStyle, setStartStyle] = useState({ display: "block" });
-  const [otherStyle, setOtherStyle] = useState({ display: "none" });
   const [data, setData] = useState("");
-
-  const handleStart = () => {
-    newWord();
-    setStartStyle({ display: "none" });
-    setOtherStyle({ display: "grid" });
-  };
 
   let blankArr = new Array(6).fill(
     new Array(5).fill({ letter: "", colour: "B" })
@@ -31,6 +23,7 @@ export default function Home() {
   useEffect(() => {
     setColouredAttempts(blankArr);
     setTriesCounter(0);
+    resetGame();
   }, []);
 
   const colourAttempt = (attempt) => {
@@ -70,30 +63,10 @@ export default function Home() {
     console.log("current word is: " + currentWord);
   };
 
-  const newWord = () => {
+  const resetGame = () => {
     generateWord();
     setColouredAttempts(blankArr);
     setTriesCounter(0);
-    checkDictionary();
-  };
-
-  const checkDictionary2 = () => {
-    console.log("checking dictionary...");
-    (async () => {
-      try {
-        await Axios.get(
-          `https://api.dictionaryapi.dev/api/v2/entries/en_US/ywrr`
-        ).then((response) => {
-          console.log("is it array: " + Array.isArray(response.data[0]));
-          console.log(response);
-        });
-      } catch (err) {
-        console.log(
-          "404 error: word not found in the free dictionary api that im using"
-        );
-        // newWord();
-      }
-    })();
   };
 
   const checkDictionary = () => {
@@ -109,9 +82,10 @@ export default function Home() {
         });
       } catch (err) {
         setData(
-          "404 error: word not found in the free dictionary api that im using"
+          "Word not found in the free dictionary api that I'm using." +
+            "\n Either the word is damn weird or there's a connection problem." +
+            "\n This won't cost you."
         );
-        // newWord();
       }
     })();
   };
@@ -121,30 +95,18 @@ export default function Home() {
       {currentWord}
       {data}
       <Intro />
-      <button
-        className={styles.main__button}
-        onClick={handleStart}
-        style={startStyle}
-      >
-        START
+
+      <AttemptsDisplay colouredAttempts={colouredAttempts} />
+      <AttemptInput addAttempt={addAttempt} />
+
+      <button className={styles.main__button} onClick={checkDictionary}>
+        HINT
+      </button>
+      <button className={styles.main__button} onClick={resetGame}>
+        NEXT WORD
       </button>
 
-      <div style={otherStyle}>
-        <AttemptsDisplay
-          colouredAttempts={colouredAttempts}
-          newWord={newWord}
-        />
-        <AttemptInput addAttempt={addAttempt} />
-
-        <button className={styles.main__button} onClick={checkDictionary}>
-          HINT
-        </button>
-        <button className={styles.main__button} onClick={newWord}>
-          NEXT WORD
-        </button>
-
-        <WinModal isOpen={isWon} setIsOpen={setIsWon} />
-      </div>
+      <WinModal isOpen={isWon} setIsOpen={setIsWon} />
     </div>
   );
 }
