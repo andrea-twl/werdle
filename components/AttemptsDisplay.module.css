@@ -1,0 +1,4 @@
+.gridWrapper {
+  display: flex;
+  flex-direction: column;
+}

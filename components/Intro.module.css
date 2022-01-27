@@ -1,0 +1,14 @@
+.heading {
+  font-size: 45px;
+  font-weight: lighter;
+  margin-bottom: 0;
+}
+
+.subHeading {
+  text-align: center;
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: lighter;
+  font-family: "montserrat";
+  color: grey;
+}
