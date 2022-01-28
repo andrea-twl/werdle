@@ -16,7 +16,7 @@ export default function Home() {
   const [isWon, setIsWon] = useState(false);
   const [triesCounter, setTriesCounter] = useState(0);
   const [data, setData] = useState("No definition yet.");
-  const [hintIsOpen, setHintIsOpen] = useState(true);
+  const [hintIsOpen, setHintIsOpen] = useState(false);
 
   let blankArr = new Array(6).fill(
     new Array(5).fill({ letter: "", colour: "B" })
@@ -91,10 +91,11 @@ export default function Home() {
           <div>
             <p>Word not found in the free dictionary api that I'm using.</p>
             <p>
-              This means that either the word is damn weird or there's a
-              connection problem.
+              This means that either the word is{" "}
+              <span style={{ color: "red" }}>damn weird</span> or there's a{" "}
+              <span style={{ color: "red" }}>connection problem</span>.
             </p>
-            <p>This won't cost you, good luck</p>
+            <p>Try again to rule out connection problems.</p>
           </div>
         );
       }
