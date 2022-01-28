@@ -4905,7 +4905,7 @@ export const COMMON_WORD_BANK = [
   "softs",
   "biffs",
   "loppy",
-  "agars",
+  // "agars",
   "aquae",
   "livre",
   "biome",

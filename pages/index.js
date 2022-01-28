@@ -31,7 +31,9 @@ export default function Home() {
   useEffect(() => {
     setData("Checking dictionary...");
     checkDictionary();
+    // console.log("Current word is: " + currentWord);
   }, [currentWord]);
+
   const colourAttempt = (attempt) => {
     let attemptArray = attempt.split("");
     let colouredArray = [];
@@ -64,9 +66,10 @@ export default function Home() {
 
   const generateWord = () => {
     const arrLength = COMMON_WORD_BANK.length;
-    let randomInt = getRandomInt(arrLength);
-    setCurrentWord(COMMON_WORD_BANK[randomInt].toUpperCase());
-    console.log("current word is: " + currentWord);
+    const randomInt = getRandomInt(arrLength);
+    const randomWord = COMMON_WORD_BANK[randomInt].toUpperCase();
+    setCurrentWord(randomWord);
+    console.log("Previous word is: " + currentWord);
   };
 
   const resetGame = () => {
@@ -120,7 +123,12 @@ export default function Home() {
         NEXT WORD
       </button>
 
-      <WinModal isOpen={isWon} setIsOpen={setIsWon} />
+      <WinModal
+        isOpen={isWon}
+        setIsOpen={setIsWon}
+        resetGame={resetGame}
+        triesCounter={triesCounter}
+      />
       <HintModal
         data={data}
         hintIsOpen={hintIsOpen}

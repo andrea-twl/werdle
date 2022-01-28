@@ -5,7 +5,7 @@ const Intro = () => {
   return (
     <div>
       <h1 className={styles.heading}>WERDLE</h1>
-      <p className={styles.subHeading}>unlimited</p>
+      <p className={styles.subHeading}>endless</p>
     </div>
   );
 };

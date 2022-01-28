@@ -3,14 +3,14 @@ import { useState } from "react";
 import Modal from "react-modal/lib/components/Modal";
 import styles from "./WinModal.module.css";
 
-const WinModal = ({ isOpen, setIsOpen, newWord }) => {
+const WinModal = ({ isOpen, setIsOpen, resetGame, triesCounter }) => {
   const closeModal = () => {
     setIsOpen(false);
   };
 
   const closeAndReset = () => {
     closeModal();
-    newWord();
+    resetGame();
   };
   const customStyles = {
     content: {
@@ -22,10 +22,10 @@ const WinModal = ({ isOpen, setIsOpen, newWord }) => {
       backgroundColor: "rgb(31, 33, 37)",
       border: "none",
       textAlign: "center",
-      // display: "flex",
-      // flexDirection: "column",
-      // alignItems: "center",
-      // justifyContent: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
     },
     overlay: {
       backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -42,7 +42,11 @@ const WinModal = ({ isOpen, setIsOpen, newWord }) => {
       >
         NEXT WORD
       </button>
-      <button className={styles.modal__button} onClick={closeModal}>
+      <button
+        className={styles.modal__button}
+        id={styles.secondButton}
+        onClick={closeModal}
+      >
         RETURN
       </button>
     </Modal>
