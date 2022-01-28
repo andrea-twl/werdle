@@ -5414,7 +5414,7 @@ export const COMMON_WORD_BANK = [
   "owest",
   "bahts",
   "lossy",
-  "ftped",
+  // "ftped",
   "hunky",
   "hoers",
   "slier",

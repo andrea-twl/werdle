@@ -8,13 +8,15 @@ import { COMMON_WORD_BANK } from "../words-five-common";
 import WinModal from "../components/WinModal";
 
 import styles from "../styles/Home.module.css";
+import HintModal from "../components/HintModal";
 
 export default function Home() {
   const [currentWord, setCurrentWord] = useState("");
   const [colouredAttempts, setColouredAttempts] = useState([]);
   const [isWon, setIsWon] = useState(false);
   const [triesCounter, setTriesCounter] = useState(0);
-  const [data, setData] = useState("");
+  const [data, setData] = useState("No definition yet.");
+  const [hintIsOpen, setHintIsOpen] = useState(true);
 
   let blankArr = new Array(6).fill(
     new Array(5).fill({ letter: "", colour: "B" })
@@ -26,6 +28,10 @@ export default function Home() {
     resetGame();
   }, []);
 
+  useEffect(() => {
+    setData("Checking dictionary...");
+    checkDictionary();
+  }, [currentWord]);
   const colourAttempt = (attempt) => {
     let attemptArray = attempt.split("");
     let colouredArray = [];
@@ -82,24 +88,31 @@ export default function Home() {
         });
       } catch (err) {
         setData(
-          "Word not found in the free dictionary api that I'm using." +
-            "\n This means that either the word is damn weird or there's a connection problem." +
-            "\n This won't cost you, good luck."
+          <div>
+            <p>Word not found in the free dictionary api that I'm using.</p>
+            <p>
+              This means that either the word is damn weird or there's a
+              connection problem.
+            </p>
+            <p>This won't cost you, good luck</p>
+          </div>
         );
       }
     })();
   };
 
+  const openHintModal = () => {
+    checkDictionary();
+    setHintIsOpen(true);
+  };
+
   return (
     <div className={styles.container}>
-      {currentWord}
-      {data}
       <Intro />
-
       <AttemptsDisplay colouredAttempts={colouredAttempts} />
       <AttemptInput addAttempt={addAttempt} />
 
-      <button className={styles.main__button} onClick={checkDictionary}>
+      <button className={styles.main__button} onClick={openHintModal}>
         HINT
       </button>
       <button className={styles.main__button} onClick={resetGame}>
@@ -107,6 +120,11 @@ export default function Home() {
       </button>
 
       <WinModal isOpen={isWon} setIsOpen={setIsWon} />
+      <HintModal
+        data={data}
+        hintIsOpen={hintIsOpen}
+        setHintIsOpen={setHintIsOpen}
+      />
     </div>
   );
 }

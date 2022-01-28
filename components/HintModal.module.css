@@ -16,6 +16,17 @@
   align-items: "center";
 }
 
+/* .modal__button {
+  width: 70%;
+  height: 13%;
+  background-color: #393e46;
+  color: white;
+  font-size: 20px;
+  font-family: "century gothic";
+  border-radius: 5px;
+  border: none;
+} */
+
 .modal__button:hover {
   background-color: #616a79;
 }
