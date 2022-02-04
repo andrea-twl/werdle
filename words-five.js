@@ -2531,7 +2531,7 @@ export const WORD_BANK = [
   "DARZI",
   "DASHI",
   "DASHY",
-  "DATAL",
+  "definitionL",
   "DATED",
   "DATER",
   "DATES",

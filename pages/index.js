@@ -9,14 +9,19 @@ import WinModal from "../components/WinModal";
 
 import styles from "../styles/Home.module.css";
 import HintModal from "../components/HintModal";
+import LoseModal from "../components/LoseModal";
+import RevealModal from "../components/RevealModal";
 
 export default function Home() {
   const [currentWord, setCurrentWord] = useState("");
   const [colouredAttempts, setColouredAttempts] = useState([]);
-  const [isWon, setIsWon] = useState(false);
+  const [isOpenWin, setIsOpenWin] = useState(false);
   const [triesCounter, setTriesCounter] = useState(0);
-  const [data, setData] = useState("No definition yet.");
-  const [hintIsOpen, setHintIsOpen] = useState(false);
+  const [hasWon, setHasWon] = useState(false);
+  const [definition, setdefinition] = useState("No definition yet.");
+  const [isOpenHint, setIsOpenHint] = useState(false);
+  const [isOpenLose, setIsOpenLose] = useState(false);
+  const [isOpenReveal, setIsOpenReveal] = useState(false);
 
   let blankArr = new Array(6).fill(
     new Array(5).fill({ letter: "", colour: "B" })
@@ -29,9 +34,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    setData("Checking dictionary...");
+    setdefinition("Checking dictionary...");
     checkDictionary();
-    // console.log("Current word is: " + currentWord);
+    console.log("should have set as check dictionary");
   }, [currentWord]);
 
   const colourAttempt = (attempt) => {
@@ -52,7 +57,11 @@ export default function Home() {
 
   const addAttempt = (attempt) => {
     if (attempt == currentWord) {
-      setIsWon(true);
+      setIsOpenWin(true);
+      setHasWon(true);
+    }
+    if (triesCounter == 5) {
+      setIsOpenLose(true);
     }
     let tempArr = colouredAttempts;
     tempArr[triesCounter] = colourAttempt(attempt);
@@ -86,29 +95,61 @@ export default function Home() {
         await Axios.get(
           `https://api.dictionaryapi.dev/api/v2/entries/en_US/${currentWord}`
         ).then((response) => {
-          setData(response.data[0].meanings[0].definitions[0].definition);
-          console.log(data);
+          setdefinition(
+            response.definition[0].meanings[0].definitions[0].definition
+          );
+          console.log(definition);
         });
       } catch (err) {
-        setData(
+        setdefinition(
           <div>
             <p>Word not found in the free dictionary api that I'm using.</p>
             <p>
               This means that either the word is{" "}
               <span style={{ color: "red" }}>damn weird</span> or there's a{" "}
-              <span style={{ color: "red" }}>connection problem</span>.
+              <span style={{ color: "red" }}>problem accessing the site</span>.
             </p>
-            <p>Try again to rule out connection problems.</p>
+            <p>Try again if you'd like.</p>
           </div>
         );
       }
     })();
   };
 
+  const nextWordButton = (
+    <button className={styles.main__button} onClick={resetGame}>
+      NEXT WORD
+    </button>
+  );
+
+  const handleGiveUp = () => {
+    setIsOpenReveal(true);
+  };
+  const giveUpButton = (
+    <button className={styles.main__button} onClick={handleGiveUp}>
+      GIVE UP
+    </button>
+  );
+
+  const [button, setButton] = useState(giveUpButton);
+
+  useEffect(() => {
+    setButton(nextWordButton);
+  }, [hasWon]);
+
   const openHintModal = () => {
     checkDictionary();
-    setHintIsOpen(true);
+    setIsOpenHint(true);
   };
+
+  const revealModal = (
+    <RevealModal
+      isOpen={isOpenReveal}
+      setIsOpen={setIsOpenReveal}
+      word={currentWord}
+      resetGame={resetGame}
+    />
+  );
 
   return (
     <div className={styles.container}>
@@ -119,20 +160,23 @@ export default function Home() {
       <button className={styles.main__button} onClick={openHintModal}>
         HINT
       </button>
-      <button className={styles.main__button} onClick={resetGame}>
-        NEXT WORD
-      </button>
-
+      {button}
       <WinModal
-        isOpen={isWon}
-        setIsOpen={setIsWon}
+        isOpen={isOpenWin}
+        setIsOpen={setIsOpenWin}
         resetGame={resetGame}
         triesCounter={triesCounter}
       />
       <HintModal
-        data={data}
-        hintIsOpen={hintIsOpen}
-        setHintIsOpen={setHintIsOpen}
+        definition={definition}
+        isOpen={isOpenHint}
+        setIsOpen={setIsOpenHint}
+      />
+      <LoseModal
+        isOpen={isOpenLose}
+        setIsOpen={setIsOpenLose}
+        revealModal={revealModal}
+        setIsOpenReveal={setIsOpenReveal}
       />
     </div>
   );

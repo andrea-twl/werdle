@@ -17,7 +17,7 @@ const WinModal = ({ isOpen, setIsOpen, resetGame, triesCounter }) => {
       top: "50%",
       left: "50%",
       marginRight: "-50%",
-      width: "80vmin",
+      width: "70vmin",
       transform: "translate(-50%, -50%)",
       backgroundColor: "rgb(31, 33, 37)",
       border: "none",
@@ -34,7 +34,7 @@ const WinModal = ({ isOpen, setIsOpen, resetGame, triesCounter }) => {
   return (
     <Modal style={customStyles} isOpen={isOpen} ariaHideApp={false}>
       <h1 className={styles.header}>You Won!</h1>
-      <p>You got the word in x tries.</p>
+      <p>You got the word in {triesCounter} tries.</p>
       <button
         className={styles.modal__button}
         id={styles.firstButton}

@@ -5,6 +5,7 @@
 
 .modal__button {
   width: 70%;
+  max-width: 400px;
   height: 13%;
   margin-top: auto;
   margin-bottom: 20px;

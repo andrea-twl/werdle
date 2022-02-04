@@ -1,7 +1,7 @@
 import Modal from "react-modal/lib/components/Modal";
-import styles from "./HintModal.module.css";
+import styles from "./RevealModal.module.css";
 
-const HintModal = ({ definition, isOpen, setIsOpen }) => {
+const LoseModal = ({ isOpen, setIsOpen, word, resetGame }) => {
   const customStyles = {
     content: {
       top: "50%",
@@ -25,16 +25,32 @@ const HintModal = ({ definition, isOpen, setIsOpen }) => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const closeAndReset = () => {
+    closeModal();
+    resetGame();
+  };
   return (
     <Modal style={customStyles} isOpen={isOpen} ariaHideApp={false}>
-      <h1 className={styles.header}>Hint</h1>
-      <p>{definition}</p>
+      <h1 className={styles.header}>The word is:</h1>
+      <p>{word}</p>
 
-      <button className={styles.modal__button} onClick={closeModal}>
+      <button
+        className={styles.modal__button}
+        id={styles.firstButton}
+        onClick={closeAndReset}
+      >
+        NEXT WORD
+      </button>
+      <button
+        className={styles.modal__button}
+        id={styles.secondButton}
+        onClick={closeModal}
+      >
         RETURN
       </button>
     </Modal>
   );
 };
 
-export default HintModal;
+export default LoseModal;

@@ -1,4 +1,3 @@
-import { path } from "./path-data.js";
 import styles from "./Intro.module.css";
 
 const Intro = () => {
