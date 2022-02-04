@@ -5,12 +5,13 @@ import Intro from "../components/Intro";
 import AttemptInput from "../components/AttemptInput";
 import AttemptsDisplay from "../components/AttemptsDisplay";
 import { COMMON_WORD_BANK } from "../words-five-common";
+import { WORDLE_BANK } from "../wordle-bank";
 import WinModal from "../components/WinModal";
-
-import styles from "../styles/Home.module.css";
 import HintModal from "../components/HintModal";
 import LoseModal from "../components/LoseModal";
 import RevealModal from "../components/RevealModal";
+
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [currentWord, setCurrentWord] = useState("");
@@ -88,9 +89,9 @@ export default function Home() {
   };
 
   const generateWord = () => {
-    const arrLength = COMMON_WORD_BANK.length;
+    const arrLength = WORDLE_BANK.length;
     const randomInt = getRandomInt(arrLength);
-    const randomWord = COMMON_WORD_BANK[randomInt].toUpperCase();
+    const randomWord = WORDLE_BANK[randomInt].toUpperCase();
     setCurrentWord(randomWord);
     console.log("Previous word is: " + currentWord);
   };
@@ -99,6 +100,7 @@ export default function Home() {
     generateWord();
     setColouredAttempts(blankArr);
     setTriesCounter(0);
+    setHasWon(false);
   };
 
   const checkDictionary = () => {
@@ -148,7 +150,11 @@ export default function Home() {
   const [button, setButton] = useState(giveUpButton);
 
   useEffect(() => {
-    setButton(nextWordButton);
+    if (hasWon) {
+      setButton(nextWordButton);
+    } else {
+      setButton(giveUpButton);
+    }
   }, [hasWon]);
 
   const openHintModal = () => {

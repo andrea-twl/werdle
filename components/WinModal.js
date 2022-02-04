@@ -1,5 +1,3 @@
-import { parseRelativeUrl } from "next/dist/shared/lib/router/utils/parse-relative-url";
-import { useState } from "react";
 import Modal from "react-modal/lib/components/Modal";
 import styles from "./WinModal.module.css";
 
