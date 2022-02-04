@@ -173,7 +173,6 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {currentWord}
       <Intro />
       <AttemptsDisplay colouredAttempts={colouredAttempts} />
       <AttemptInput addAttempt={addAttempt} />
