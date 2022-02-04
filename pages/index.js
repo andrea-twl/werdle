@@ -190,7 +190,7 @@ export default function Home() {
         triesCounter={triesCounter}
       />
       <HintModal
-        definition={definition}
+        definition={"Currently unavailable"}
         isOpen={isOpenHint}
         setIsOpen={setIsOpenHint}
       />
