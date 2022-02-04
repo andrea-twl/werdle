@@ -41,13 +41,27 @@ export default function Home() {
 
   const colourAttempt = (attempt) => {
     let attemptArray = attempt.split("");
+    let currentArray = currentWord.split("");
+
     let colouredArray = [];
+
+    // colour all matching letters green first
     attemptArray.forEach((letter, index) => {
-      letter = letter.toUpperCase();
-      if (letter == currentWord[index]) {
+      if (letter == currentArray[index]) {
+        console.log("match");
         colouredArray[index] = { letter: letter, colour: "G" };
-      } else if (currentWord.includes(letter)) {
+        currentArray[index] = "*";
+      }
+    });
+
+    // check for yellow and red letters
+    attemptArray.forEach((letter, index) => {
+      if (colouredArray[index] != null) {
+        // already green, do nothing
+      } else if (currentArray.includes(letter)) {
+        console.log("yellow");
         colouredArray[index] = { letter: letter, colour: "Y" };
+        currentArray[currentArray.indexOf(letter)] = "*";
       } else {
         colouredArray[index] = { letter: letter, colour: "R" };
       }
@@ -153,6 +167,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      {currentWord}
       <Intro />
       <AttemptsDisplay colouredAttempts={colouredAttempts} />
       <AttemptInput addAttempt={addAttempt} />
