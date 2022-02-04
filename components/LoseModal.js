@@ -35,8 +35,8 @@ const LoseModal = ({ isOpen, setIsOpen, setIsOpenReveal, revealModal }) => {
   return (
     <>
       <Modal style={customStyles} isOpen={isOpen} ariaHideApp={false}>
-        <h1 className={styles.header}>You're out of tries!</h1>
-        <p>You have guessed 6 words and still didn't make it! What the hell!</p>
+        <h1 className={styles.header}>You&apos;re out of tries!</h1>
+        <p>What the hell!</p>
 
         <button
           className={styles.modal__button}

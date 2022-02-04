@@ -119,13 +119,15 @@ export default function Home() {
       } catch (err) {
         setdefinition(
           <div>
-            <p>Word not found in the free dictionary api that I'm using.</p>
+            <p>
+              Word not found in the free dictionary api that I&apos;m using.
+            </p>
             <p>
               This means that either the word is{" "}
-              <span style={{ color: "red" }}>damn weird</span> or there's a{" "}
+              <span style={{ color: "red" }}>damn weird</span> or there&apos;s a{" "}
               <span style={{ color: "red" }}>problem accessing the site</span>.
             </p>
-            <p>Try again if you'd like.</p>
+            <p>Try again if you&apos;d like.</p>
           </div>
         );
       }
